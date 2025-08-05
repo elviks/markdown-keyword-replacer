@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useRef } from 'react';
-import { FileText, Settings, Play, Download, Copy, Eye, EyeOff } from 'lucide-react';
+import { useState, useCallback, useRef } from 'react';
+import { Download, Copy, Eye, EyeOff } from 'lucide-react';
 import { KeywordProcessor } from './utils/keywordProcessor';
 import { MarkdownRenderer } from './components/MarkdownRenderer';
 import { KeywordVariantInput } from './components/KeywordVariantInput';
@@ -22,7 +22,7 @@ function App() {
     sectionTailMode: false,
     tailSkipAmount: 50,
   });
-  
+
   const [processedArticle, setProcessedArticle] = useState('');
   const [processingStats, setProcessingStats] = useState<ProcessingResult | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -43,7 +43,7 @@ function App() {
     setKeywordVariants(demoData.variants);
     setExclusionKeywords(demoData.exclusionKeywords);
     setReplacementPercentage(demoData.percentage);
-    
+
     setProcessedArticle('');
     setProcessingStats(null);
     setActiveTab('original');
@@ -56,9 +56,9 @@ function App() {
     }
 
     setIsProcessing(true);
-    
+
     await new Promise(resolve => setTimeout(resolve, 300));
-    
+
     try {
       const processor = new KeywordProcessor();
       const result = processor.processArticle(
@@ -69,15 +69,15 @@ function App() {
         exclusionKeywords,
         processingOptions
       );
-      
+
       setProcessedArticle(result.processedText);
       setProcessingStats(result);
       setActiveTab('processed');
-      
+
       setTimeout(() => {
-        previewSectionRef.current?.scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'start' 
+        previewSectionRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
         });
       }, 100);
     } catch (error) {
@@ -126,25 +126,25 @@ function App() {
             {/* Animated Background */}
             <div className="absolute inset-0 bg-slate-800 opacity-90"></div>
             <div className="absolute inset-0 bg-slate-800/20"></div>
-            
+
             {/* Floating Particles Effect */}
             <div className="absolute top-4 left-1/4 w-2 h-2 bg-white/30 rounded-full animate-pulse"></div>
             <div className="absolute top-8 right-1/3 w-1 h-1 bg-white/40 rounded-full animate-ping"></div>
             <div className="absolute bottom-6 left-1/3 w-3 h-3 bg-white/20 rounded-full animate-bounce"></div>
-            
+
             {/* Main Content */}
             <div className="relative z-10 backdrop-blur-sm bg-white/10 border border-white/20 rounded-2xl mx-4 p-8 shadow-2xl">
               <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6">
                 {/* Logo with Glow Effect */}
                 {/* Logo */}
                 <div>
-                  <img 
-                    src="/fishtail-logo.png" 
-                    alt="Logo" 
+                  <img
+                    src="/fishtail-logo.png"
+                    alt="Logo"
                     className="h-16 w-auto hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                
+
                 {/* Text Content */}
                 <div className="text-center md:text-left">
                   <h1 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tight">
@@ -165,7 +165,7 @@ function App() {
                   </div>
                 </div>
               </div>
-              
+
               {/* Bottom Accent Line */}
               <div className="mt-6 h-1 bg-gradient-to-r from-transparent via-white/50 to-transparent rounded-full"></div>
             </div>
@@ -197,7 +197,7 @@ function App() {
                     className="input-field"
                   />
                 </div>
-                
+
                 <div className="form-group">
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Replacement Percentage: {replacementPercentage}%
@@ -278,28 +278,26 @@ function App() {
                   <div className="flex bg-gray-100 rounded-lg p-1">
                     <button
                       onClick={() => setActiveTab('original')}
-                      className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                        activeTab === 'original'
-                          ? 'bg-white text-gray-900 shadow-sm'
-                          : 'text-gray-600 hover:text-gray-900'
-                      }`}
+                      className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${activeTab === 'original'
+                        ? 'bg-white text-gray-900 shadow-sm'
+                        : 'text-gray-600 hover:text-gray-900'
+                        }`}
                     >
                       Original
                     </button>
                     <button
                       onClick={() => setActiveTab('processed')}
-                      className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                        activeTab === 'processed'
-                          ? 'bg-white text-gray-900 shadow-sm'
-                          : 'text-gray-600 hover:text-gray-900'
-                      }`}
+                      className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${activeTab === 'processed'
+                        ? 'bg-white text-gray-900 shadow-sm'
+                        : 'text-gray-600 hover:text-gray-900'
+                        }`}
                       disabled={!processedArticle}
                     >
                       Processed
                     </button>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={() => setShowPreview(!showPreview)}
@@ -308,14 +306,14 @@ function App() {
                     {showPreview ? <EyeOff className="w-4 h-4 mr-2" /> : <Eye className="w-4 h-4 mr-2" />}
                     {showPreview ? 'Raw' : 'Preview'}
                   </button>
-                  
+
                   {activeTab === 'original' && articleText && (
                     <button onClick={handleCopyOriginal} className="btn-secondary">
                       <Copy className="w-4 h-4 mr-2" />
                       Copy
                     </button>
                   )}
-                  
+
                   {processedArticle && activeTab === 'processed' && (
                     <>
                       <button onClick={handleCopyProcessed} className="btn-secondary">

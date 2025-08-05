@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarChart3, Clock, Target, Layers } from 'lucide-react';
+import { BarChart3, Target } from 'lucide-react';
 import type { ProcessingResult } from '../types';
 
 interface ProcessingStatsProps {
@@ -10,7 +10,7 @@ export const ProcessingStats: React.FC<ProcessingStatsProps> = ({ stats }) => {
   const getPriorityColor = (priority: number) => {
     const colors = {
       1: 'priority-1',
-      2: 'priority-2', 
+      2: 'priority-2',
       3: 'priority-3',
       4: 'priority-4',
       5: 'priority-5',
@@ -21,7 +21,7 @@ export const ProcessingStats: React.FC<ProcessingStatsProps> = ({ stats }) => {
   const getPriorityLabel = (priority: number) => {
     const labels = {
       1: 'Highest',
-      2: 'High', 
+      2: 'High',
       3: 'Medium',
       4: 'Low',
       5: 'Lowest',
@@ -29,7 +29,7 @@ export const ProcessingStats: React.FC<ProcessingStatsProps> = ({ stats }) => {
     return labels[priority as keyof typeof labels] || 'Unknown';
   };
 
-  const replacementRate = stats.totalMatches > 0 
+  const replacementRate = stats.totalMatches > 0
     ? Math.round((stats.totalReplacements / stats.totalMatches) * 100)
     : 0;
 
@@ -39,30 +39,30 @@ export const ProcessingStats: React.FC<ProcessingStatsProps> = ({ stats }) => {
         <BarChart3 className="w-5 h-5 mr-2 text-blue-600" />
         Processing Statistics
       </h2>
-      
+
       <div className="grid grid-cols-2 gap-4 mb-6">
         <div className="stats-card text-center">
           <div className="stats-number text-blue-600">{stats.totalMatches}</div>
           <div className="stats-label">Total Matches</div>
         </div>
-        
+
         <div className="stats-card text-center">
           <div className="stats-number text-green-600">{stats.totalReplacements}</div>
           <div className="stats-label">Replacements Made</div>
           <div className="text-xs text-gray-500 mt-1">{replacementRate}% of matches</div>
         </div>
-        
+
         <div className="stats-card text-center">
           <div className="stats-number text-purple-600">{stats.sectionsProcessed}</div>
           <div className="stats-label">Sections Processed</div>
         </div>
-        
+
         <div className="stats-card text-center">
           <div className="stats-number text-orange-600">{Math.round(stats.processingTime)}ms</div>
           <div className="stats-label">Processing Time</div>
         </div>
       </div>
-      
+
       {/* Priority Breakdown */}
       <div className="border-t border-gray-200 pt-4">
         <h3 className="text-sm font-medium text-gray-900 mb-3 flex items-center">
@@ -74,10 +74,10 @@ export const ProcessingStats: React.FC<ProcessingStatsProps> = ({ stats }) => {
             .filter(([_, count]) => count > 0)
             .map(([priority, count]) => {
               const priorityNum = parseInt(priority);
-              const percentage = stats.totalReplacements > 0 
+              const percentage = stats.totalReplacements > 0
                 ? Math.round((count / stats.totalReplacements) * 100)
                 : 0;
-              
+
               return (
                 <div key={priority} className="flex items-center justify-between p-2 bg-gray-50 rounded">
                   <div className="flex items-center space-x-2">
@@ -95,7 +95,7 @@ export const ProcessingStats: React.FC<ProcessingStatsProps> = ({ stats }) => {
               );
             })}
         </div>
-        
+
         {Object.values(stats.replacementsByPriority).every(count => count === 0) && (
           <div className="text-center py-4 text-gray-500">
             <BarChart3 className="w-8 h-8 mx-auto mb-2 opacity-50" />
